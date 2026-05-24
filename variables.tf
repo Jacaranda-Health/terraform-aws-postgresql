@@ -43,7 +43,19 @@ variable "postgresql_allocated_storage" {
 variable "postgresql_storage_type" {
   type        = string
   default     = "gp2"
-  description = "Storage type for the RDS instance. Can be 'gp2', 'standard', 'io1'"
+  description = "Storage type for the RDS instance. Can be 'gp2', 'standard', 'io1', 'io2'"
+}
+
+variable "postgresql_iops" {
+  type        = number
+  default     = null
+  description = "Provisioned IOPS for io1/io2 storage types"
+}
+
+variable "postgresql_max_allocated_storage" {
+  type        = number
+  default     = null
+  description = "Upper limit for autoscaling storage in GB"
 }
 variable "postgresql_username" {
   type        = string
