@@ -184,6 +184,10 @@ resource "aws_db_parameter_group" "main" {
     EndDate         = var.postgresql_end_date
     Group           = "${var.postgresql_project}-${var.postgresql_env}"
   }
+
+  lifecycle {
+    ignore_changes = [parameter]
+  }
 }
 
 resource "aws_kms_key" "main" {
