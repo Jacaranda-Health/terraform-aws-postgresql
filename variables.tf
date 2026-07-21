@@ -52,6 +52,12 @@ variable "postgresql_iops" {
   description = "Provisioned IOPS for io1/io2 storage types"
 }
 
+variable "postgresql_storage_throughput" {
+  type        = number
+  default     = null
+  description = "Storage throughput in MiBps. Only valid for gp3 storage; null uses the gp3 baseline."
+}
+
 variable "postgresql_max_allocated_storage" {
   type        = number
   default     = null

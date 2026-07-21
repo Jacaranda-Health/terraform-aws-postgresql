@@ -7,6 +7,7 @@ resource "aws_db_instance" "blank-database" {
   max_allocated_storage           = var.postgresql_max_allocated_storage
   storage_type                    = var.postgresql_storage_type
   iops                            = var.postgresql_iops
+  storage_throughput              = var.postgresql_storage_throughput
   engine                          = "postgres"
   engine_version                  = var.postgresql_version
   instance_class                  = var.postgresql_instance_class
