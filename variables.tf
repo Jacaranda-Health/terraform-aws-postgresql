@@ -31,6 +31,16 @@ variable "postgresql_version" {
   type        = string
   description = "The PostgreSQL version for the RDS instance"
 }
+variable "postgresql_allow_major_version_upgrade" {
+  type        = bool
+  default     = false
+  description = "Whether to allow an in-place major PostgreSQL version upgrade."
+}
+variable "postgresql_parameter_group_name" {
+  type        = string
+  default     = ""
+  description = "Optional DB parameter group name. Defaults to postgresql_name for backwards compatibility."
+}
 variable "postgresql_instance_class" {
   type        = string
   description = "The instance type of the RDS instance"
