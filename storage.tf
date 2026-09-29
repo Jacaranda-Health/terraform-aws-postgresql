@@ -4,9 +4,13 @@ resource "aws_db_instance" "blank-database" {
   apply_immediately               = var.postgresql_apply_immediately
   identifier                      = var.postgresql_name
   allocated_storage               = var.postgresql_allocated_storage
+  max_allocated_storage           = var.postgresql_max_allocated_storage
   storage_type                    = var.postgresql_storage_type
+  iops                            = var.postgresql_iops
+  storage_throughput              = var.postgresql_storage_throughput
   engine                          = "postgres"
   engine_version                  = var.postgresql_version
+  allow_major_version_upgrade     = var.postgresql_allow_major_version_upgrade
   instance_class                  = var.postgresql_instance_class
   db_name                         = var.postgresql_db_name
   username                        = var.postgresql_username
@@ -36,6 +40,13 @@ resource "aws_db_instance" "blank-database" {
     DeploymentType  = var.postgresql_deployment_type
     EndDate         = var.postgresql_end_date
     Group           = "${var.postgresql_project}-${var.postgresql_env}"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      password,
+      vpc_security_group_ids,
+    ]
   }
 }
 
@@ -117,7 +128,7 @@ resource "aws_db_instance" "replica-database" {
 }
 
 resource "aws_db_parameter_group" "main" {
-  name   = var.postgresql_name
+  name   = length(var.postgresql_parameter_group_name) > 0 ? var.postgresql_parameter_group_name : var.postgresql_name
   family = length(var.postgresql_parameter_group_family) > 0 ? var.postgresql_parameter_group_family : "postgres${element(split(".", var.postgresql_version), 0)}"
 
   parameter {
@@ -174,6 +185,11 @@ resource "aws_db_parameter_group" "main" {
     DeploymentType  = var.postgresql_deployment_type
     EndDate         = var.postgresql_end_date
     Group           = "${var.postgresql_project}-${var.postgresql_env}"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+    ignore_changes        = [parameter]
   }
 }
 

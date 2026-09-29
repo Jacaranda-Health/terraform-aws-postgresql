@@ -31,6 +31,16 @@ variable "postgresql_version" {
   type        = string
   description = "The PostgreSQL version for the RDS instance"
 }
+variable "postgresql_allow_major_version_upgrade" {
+  type        = bool
+  default     = false
+  description = "Whether to allow an in-place major PostgreSQL version upgrade."
+}
+variable "postgresql_parameter_group_name" {
+  type        = string
+  default     = ""
+  description = "Optional DB parameter group name. Defaults to postgresql_name for backwards compatibility."
+}
 variable "postgresql_instance_class" {
   type        = string
   description = "The instance type of the RDS instance"
@@ -43,7 +53,25 @@ variable "postgresql_allocated_storage" {
 variable "postgresql_storage_type" {
   type        = string
   default     = "gp2"
-  description = "Storage type for the RDS instance. Can be 'gp2', 'standard', 'io1'"
+  description = "Storage type for the RDS instance. Can be 'gp2', 'standard', 'io1', 'io2'"
+}
+
+variable "postgresql_iops" {
+  type        = number
+  default     = null
+  description = "Provisioned IOPS for io1/io2 storage types"
+}
+
+variable "postgresql_storage_throughput" {
+  type        = number
+  default     = null
+  description = "Storage throughput in MiBps. Only valid for gp3 storage; null uses the gp3 baseline."
+}
+
+variable "postgresql_max_allocated_storage" {
+  type        = number
+  default     = null
+  description = "Upper limit for autoscaling storage in GB"
 }
 variable "postgresql_username" {
   type        = string

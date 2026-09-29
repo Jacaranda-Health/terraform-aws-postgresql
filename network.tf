@@ -34,6 +34,10 @@ resource "aws_security_group" "firewall_rule" {
     DeploymentType  = var.postgresql_deployment_type
     Group           = "${var.postgresql_project}-${var.postgresql_env}"
   }
+
+  lifecycle {
+    ignore_changes = [ingress]
+  }
 }
 
 resource "aws_db_subnet_group" "main" {
