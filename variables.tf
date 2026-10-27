@@ -404,3 +404,9 @@ variable "postgresql_firewall_rule_ingress_security_groups" {
   default     = []
   description = "Security groups to allow to access the PostgreSQL instance"
 }
+
+variable "postgresql_availability_zone" {
+  type        = string
+  default     = null
+  description = "Availability Zone to place the instance in (must be one the subnet group covers). null lets RDS choose. Set it on a primary and its read replica to different zones so one zone event cannot take both; changing it on an existing instance replaces the instance."
+}

@@ -3,6 +3,7 @@ resource "aws_db_instance" "blank-database" {
 
   apply_immediately               = var.postgresql_apply_immediately
   identifier                      = var.postgresql_name
+  availability_zone               = var.postgresql_availability_zone
   allocated_storage               = var.postgresql_allocated_storage
   max_allocated_storage           = var.postgresql_max_allocated_storage
   storage_type                    = var.postgresql_storage_type
@@ -55,6 +56,7 @@ resource "aws_db_instance" "from-snapshot" {
 
   apply_immediately               = var.postgresql_apply_immediately
   identifier                      = var.postgresql_name
+  availability_zone               = var.postgresql_availability_zone
   storage_type                    = var.postgresql_storage_type
   instance_class                  = var.postgresql_instance_class
   parameter_group_name            = aws_db_parameter_group.main.name
@@ -97,6 +99,7 @@ resource "aws_db_instance" "replica-database" {
 
   apply_immediately               = var.postgresql_apply_immediately
   identifier                      = var.postgresql_name
+  availability_zone               = var.postgresql_availability_zone
   allocated_storage               = var.postgresql_allocated_storage
   # RDS copies the source's autoscaling ceiling onto a new replica; without
   # this line the first modification of the replica (a promotion, for one)
