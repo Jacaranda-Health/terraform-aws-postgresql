@@ -97,10 +97,10 @@ resource "aws_db_instance" "from-snapshot" {
 resource "aws_db_instance" "replica-database" {
   count = var.postgresql_replicate_source_db == null ? 0 : 1
 
-  apply_immediately               = var.postgresql_apply_immediately
-  identifier                      = var.postgresql_name
-  availability_zone               = var.postgresql_availability_zone
-  allocated_storage               = var.postgresql_allocated_storage
+  apply_immediately = var.postgresql_apply_immediately
+  identifier        = var.postgresql_name
+  availability_zone = var.postgresql_availability_zone
+  allocated_storage = var.postgresql_allocated_storage
   # RDS copies the source's autoscaling ceiling onto a new replica; without
   # this line the first modification of the replica (a promotion, for one)
   # strips it again.
